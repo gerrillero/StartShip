@@ -17,17 +17,17 @@ namespace StartShip
             Console.WindowHeight = 40;
             Console.WindowWidth = 80;
 
-
             Helper.PintarLimites();
 
             Nave nave1 = new Nave(37, 30, 3, 3);
             nave1.Pintar();
             nave1.PintarCorazones();
 
-
             Random rand = new Random();
             Boolean gameOver = false;
             Int32 puntos = 0;
+
+            ConsoleKeyInfo tecla;
 
             List<Asteroide> asteroides = new List<Asteroide>();
 
@@ -41,14 +41,30 @@ namespace StartShip
                 Console.SetCursorPosition(4, 2);
                 Console.Write("Puntos {0}", puntos);
 
-                //nave1.Mover();
-                //nave1.Disparar();
+                if (Console.KeyAvailable)
+                {
+                    tecla = Console.ReadKey(true);
 
-
+                    nave1.Mover(tecla);
+                    nave1.Disparar(tecla);
+                }
+               
                 for (int i = 0; i < asteroides.Count; i++)
                 {
                     asteroides[i].Mover();
                     asteroides[i].Choque(nave1);
+                }
+
+                for (int i = 0; i < nave1.balas.Count; i++)
+                {
+                    nave1.balas[i].Mover();
+
+                    if (nave1.balas[i].Fuera())
+                    {
+                        Console.SetCursorPosition(nave1.balas[i].X, nave1.balas[i].Y);
+                        Console.WriteLine(" ");
+                        nave1.balas.Remove(nave1.balas[i]);
+                    }
                 }
 
                 for (int i = 0; i < asteroides.Count; i++)
@@ -75,9 +91,15 @@ namespace StartShip
                     gameOver = true;
 
                 nave1.Morir();
-                //nave1.Mover();
 
-                Thread.Sleep(30);
+                if (Console.KeyAvailable)
+                {
+                    tecla = Console.ReadKey(true);
+
+                    nave1.Mover(tecla);
+                }
+
+                Thread.Sleep(40);
             }
 
             Console.Read();

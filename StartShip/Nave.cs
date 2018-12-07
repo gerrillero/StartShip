@@ -46,36 +46,37 @@ namespace StartShip
             Console.Write("     ");
         }
 
-        public void Mover()
+        public void Mover(ConsoleKeyInfo tecla)
         {
-            ConsoleKeyInfo tecla = Console.ReadKey();
-
             Borrar();
-            if (tecla.Key == ConsoleKey.LeftArrow && X > 3) X--;
-            if (tecla.Key == ConsoleKey.RightArrow && X + 5 < 76) X++;
-            if (tecla.Key == ConsoleKey.UpArrow && Y > 4) Y--;
-            if (tecla.Key == ConsoleKey.DownArrow && Y + 3 < 33) Y++;
+
+            switch (tecla.Key)
+            {
+                case ConsoleKey.LeftArrow:
+                    if (tecla.Key == ConsoleKey.LeftArrow && X > 3) X--;
+                    break;
+                case ConsoleKey.UpArrow:
+                    if (tecla.Key == ConsoleKey.UpArrow && Y > 4) Y--;
+                    break;
+                case ConsoleKey.RightArrow:
+                    if (tecla.Key == ConsoleKey.RightArrow && X + 5 < 76) X++;
+                    break;
+                case ConsoleKey.DownArrow:
+                    if (tecla.Key == ConsoleKey.DownArrow && Y + 3 < 33) Y++;
+                    break;
+            }
+
             Pintar();
         }
 
-        public void Disparar()
+        public void Disparar(ConsoleKeyInfo tecla)
         {
-            ConsoleKeyInfo tecla = Console.ReadKey();
 
             if (tecla.Key == ConsoleKey.Spacebar)
-                balas.Add(new Bala(X + 2, Y - 1));
-
-            for (int i = 0; i < balas.Count; i++)
             {
-                balas[i].Mover();
-
-                if (balas[i].Fuera())
-                {
-                    Console.SetCursorPosition(balas[i].X, balas[i].Y);
-                    Console.WriteLine(" ");
-                    balas.Remove(balas[i]);
-                }
+                balas.Add(new Bala(X + 2, Y - 1));
             }
+
         }
 
         public void PintarCorazones()
