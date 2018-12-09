@@ -46,7 +46,7 @@ namespace StartShip
                     tecla = Console.ReadKey(true);
 
                     nave1.Mover(tecla);
-                    nave1.Disparar(tecla);
+                   // nave1.Disparar(tecla);
                 }
                
                 for (int i = 0; i < asteroides.Count; i++)
@@ -99,7 +99,7 @@ namespace StartShip
                     nave1.Mover(tecla);
                 }
 
-                Thread.Sleep(40);
+                Thread.Sleep(30);
             }
 
             Console.Read();
